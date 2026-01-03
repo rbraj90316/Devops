@@ -13,8 +13,8 @@ export default defineConfig({
   server: {
     port: 3000,
     host: true,
-     allowedHosts: [
-      '.onrender.com'
+    allowedHosts: [
+      'frontend-latest-bsij.onrender.com'
     ]
   }
 })
