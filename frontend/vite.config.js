@@ -12,6 +12,6 @@ export default defineConfig({
   ],
   server: {
     host: true,
-    allowedHosts: ['.onrender.com']
+    allowedHosts: ['https://frontend-latest-2-xq43.onrender.com']
   }
 })
