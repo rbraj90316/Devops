@@ -43,9 +43,9 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-2xl font-semibold text-center mb-6">
+    <div className="min-h-screen flex items-center justify-center bg-amber-400">
+      <div className="w-full max-w-md bg-red-500 rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold text-center text-emerald-600 mb-6">
           Create Account
         </h2>
 
@@ -57,7 +57,7 @@ const Register = () => {
             value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-4 focus:ring-cyan-500"
           />
 
           <input
@@ -67,7 +67,7 @@ const Register = () => {
             value={formData.email}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-4 focus:ring-cyan-500"
           />
 
           <input
@@ -77,7 +77,7 @@ const Register = () => {
             value={formData.password}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-4 focus:ring-cyan-500"
           />
 
           <input
@@ -87,12 +87,12 @@ const Register = () => {
             value={formData.confirmPassword}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 border text-black rounded-md focus:outline-none focus:ring-4 focus:ring-cyan-500"
           />
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700 transition"
+            className="w-full bg-cyan-600 text-amber-800 py-2 rounded-md hover:bg-fuchsia-700 transition"
           >
             Register
           </button>
