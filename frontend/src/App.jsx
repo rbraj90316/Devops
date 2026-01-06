@@ -2,15 +2,17 @@
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-
+import Register from './pages/Register'
+import {BrowserRouter as Router, Route,Routes} from 'react-router-dom'
 function App() {
-
-
   return (
     <>
       <h1 className='text-3xl text-amber-400 p-4 bg-blue-700 rounded-4xl border-4'>Frontend running 🚀</h1>
-      <h1 className='text-3xl text-amber-400 p-4 bg-blue-700 rounded-4xl border-4'>Frontend running 🚀</h1>
-      <p className='text-2xl text-cyan-500 bg-amber-950 border-2 rounded-2xl'>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate repellat, aspernatur dignissimos nam nulla cumque iure quasi voluptatibus dolor sed? Provident dicta at libero. A magni dolores odit nisi laudantium.</p>
+      <Router>
+        <Routes>
+          <Route path='/register' element={<Register/>} />
+        </Routes>
+      </Router>
     </>
   )
 }
