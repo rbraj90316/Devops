@@ -1,8 +1,8 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const Item= require("./models/Item");
+const mongoose=require('mongoose');
 dotenv.config();
 const PORT=process.env.PORT || 5000;
 
@@ -12,10 +12,9 @@ app.use(cors());
 
 // MongoDB connection
 mongoose
-  .connect("mongodb://127.0.0.1:27017/devops")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error(err));
-
+  .catch((err) => console.error("MongoDB error:", err));
 // Routes
 app.get("/", (req, res) => {
   res.json({ message: "Backend running successfully 🚀" });
