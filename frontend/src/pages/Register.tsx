@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface RegisterForm {
   name: string;
@@ -10,6 +11,8 @@ interface RegisterForm {
 }
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState<RegisterForm>({
     name: "",
     email: "",
@@ -25,7 +28,7 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
@@ -33,15 +36,35 @@ const Register = () => {
       return;
     }
 
-    const payload = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
+    try {
+      const response = await fetch(`${API_BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
+      });
 
-    console.log("Register Payload:", payload);
+      const data = await response.json();
 
-    // 👉 send payload to backend using axios / fetch
+      if (!response.ok) {
+        alert(data.message || "Registration failed");
+        return;
+      }
+
+      alert("Registration successful ✅");
+      console.log(data);
+
+      // Redirect to login page after successful registration
+      navigate("/login");
+    } catch (error) {
+      console.error("Register error:", error);
+      alert("Server error");
+    }
   };
 
   return (
@@ -98,7 +121,13 @@ const Register = () => {
           >
             Register
           </button>
-          <p>already have an account? <Link to={'/login'}>Login here</Link></p>
+
+          <p className="text-center text-black">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-800 font-semibold">
+              Login here
+            </Link>
+          </p>
         </form>
       </div>
     </div>
