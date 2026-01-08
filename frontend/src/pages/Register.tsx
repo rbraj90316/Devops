@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 interface RegisterForm {
   name: string;
@@ -96,6 +98,7 @@ const Register = () => {
           >
             Register
           </button>
+          <p>already have an account? <Link to={'/login'}>Login here</Link></p>
         </form>
       </div>
     </div>
