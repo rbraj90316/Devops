@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const Item= require("./models/Item");
 dotenv.config();
+const PORT=process.env.PORT || 5000;
 
 const app = express();
 app.use(express.json());
@@ -75,6 +76,6 @@ user:  {id:user._id,
  })
 })
 
-app.listen(5000, () => {
-  console.log("Server running on http://localhost:5000");
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
