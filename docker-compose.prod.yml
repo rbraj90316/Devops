@@ -1,11 +1,11 @@
-# docker-compose.prod.yml
-version: "3.8"
-services:
-  frontend:
-    build: ./frontend
-    ports:
-      - "80:80"
-  backend:
-    build: ./backend
-    ports:
-      - "5000:5000"
+# # docker-compose.prod.yml
+# version: "3.8"
+# services:
+#   frontend:
+#     build: ./frontend
+#     ports:
+#       - "80:80"
+#   backend:
+#     build: ./backend
+#     ports:
+#       - "5000:5000"
