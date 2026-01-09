@@ -1,14 +1,20 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const Item= require("./models/Item");
-const mongoose=require('mongoose');
+const mongoose = require("mongoose");
+const Item = require("./models/Item");
+
 dotenv.config();
-const PORT=process.env.PORT || 5000;
+
+const PORT = process.env.PORT || 5000;
 
 const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(cors({
+
+app.use(
+  cors({
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
@@ -16,23 +22,24 @@ app.use(cors({
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
-  }));
-  app.options("*", cors());
+  })
+);
+
+// Handle preflight requests
+app.options("*", cors());
 
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB error:", err));
+
 // Routes
 app.get("/", (req, res) => {
   res.json({ message: "Backend running successfully 🚀" });
 });
 
-
-
-// Register route
+// Register
 app.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -60,31 +67,40 @@ app.post("/register", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-app.post("/login",async(req,res)=>{
-  const {email, password}=req.body;
-  if(!email || !password){
-    return res.status(400).json({message:"Fill up requirement!"})
+
+// Login
+app.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password required" });
+    }
+
+    const user = await Item.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+
+    res.status(200).json({
+      message: "Login successful",
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        createdAt: user.createdAt,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
-  const user=await Item.findOne({email});
- if(!user){
-  return res.status(404).json({message:"User not found"});
+});
 
- }
- if(user.password != password){
-  return res.status(401).json({message:"Invalid credential"});
- }
- res.status(200).json({
-  message:"User Login Successfully",
-user:  {id:user._id,
-  name:user.name,
-  email:user.email,
-  createAt:user.createdAt,
-  password:user.password,
-  name:user.name
-},
- })
-})
-
+// Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
