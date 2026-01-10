@@ -6,7 +6,7 @@ const Item = require("./models/Item");
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT =5000;
 
 const app = express();
 
@@ -30,7 +30,7 @@ app.options("*", cors());
 
 // MongoDB connection
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect("mongodb+srv://420rbraj_db_user:6szyanyWrQBgvDkn@devops.mppcchl.mongodb.net/?appName=devops")
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB error:", err));
 
