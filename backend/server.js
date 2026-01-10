@@ -6,38 +6,18 @@ const Item = require("./models/Item");
 
 dotenv.config();
 
-const PORT =5000;
-
+const PORT = process.env.PORT || 5000;
 const app = express();
 
 // Middleware
 app.use(express.json());
-
-app.use(
-  cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "https://devops-backend-1.onrender.com",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
-
-// Handle preflight requests
-app.options("*", cors());
+app.use(cors());
 
 // MongoDB connection
 mongoose
-  .connect("mongodb+srv://420rbraj_db_user:6szyanyWrQBgvDkn@devops.mppcchl.mongodb.net/?appName=devops")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB error:", err));
-
-// Routes
-app.get("/*", (req, res) => {
-  res.json({ message: "Backend running successfully 🚀" });
-});
 
 // Register
 app.post("/register", async (req, res) => {
@@ -92,12 +72,16 @@ app.post("/login", async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        createdAt: user.createdAt,
       },
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
+});
+
+// Health check / catch-all
+app.get("/*", (req, res) => {
+  res.json({ message: "Backend running successfully 🚀" });
 });
 
 // Start server
