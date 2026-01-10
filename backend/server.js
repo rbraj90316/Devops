@@ -6,7 +6,8 @@ const Item = require("./models/Item");
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
+const MONGO_URI="mongodb+srv://420rbraj_db_user:6szyanyWrQBgvDkn@devops.mppcchl.mongodb.net/?appName=devops";
 const app = express();
 
 // Middleware
