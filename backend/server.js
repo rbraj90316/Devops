@@ -1,24 +1,27 @@
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const Item = require("./models/Item");
 
-dotenv.config();
-
-const PORT = 5000;
-const MONGO_URI="mongodb+srv://420rbraj_db_user:6szyanyWrQBgvDkn@devops.mppcchl.mongodb.net/?appName=devops";
 const app = express();
+const PORT = 5000;
 
 // Middleware
 app.use(express.json());
 app.use(cors());
 
-// MongoDB connection
+// MongoDB connection (hardcoded)
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(
+    "mongodb+srv://420rbraj_db_user:6szyanyWrQBgvDkn@devops.mppcchl.mongodb.net/?appName=devops"
+  )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error("MongoDB error:", err));
+
+// Health check (NO wildcard)
+app.get("/", (req, res) => {
+  res.json({ message: "Backend running successfully 🚀" });
+});
 
 // Register
 app.post("/register", async (req, res) => {
@@ -80,9 +83,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Health check / catch-all
-app.get("/*", (req, res) => {
-  res.json({ message: "Backend running successfully 🚀" });
+// 404 handler (SAFE)
+app.use((req, res) => {
+  res.status(404).json({ message: "Route not found" });
 });
 
 // Start server
