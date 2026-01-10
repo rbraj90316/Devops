@@ -35,7 +35,7 @@ mongoose
   .catch((err) => console.error("MongoDB error:", err));
 
 // Routes
-app.get("/", (req, res) => {
+app.get("/*", (req, res) => {
   res.json({ message: "Backend running successfully 🚀" });
 });
 
